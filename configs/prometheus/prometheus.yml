@@ -16,7 +16,43 @@ alerting:
 scrape_configs:
   - job_name: prometheus
     static_configs:
-      - targets: [ 'localhost:9090' ]
+      - targets: [ '0.0.0.0:9090' ]
+        labels:
+          container: 'prometheus'
+
+  - job_name: git
+    static_configs:
+      - targets: [ '172.16.101.75:9100' ]
+        labels:
+          container: 'prometheus'
+
+  - job_name: monit
+    static_configs:
+      - targets: [ '172.16.101.74:9100' ]
+        labels:
+          container: 'prometheus'
+
+  - job_name: app1
+    static_configs:
+      - targets: [ '172.16.101.71:9100' ]
+        labels:
+          container: 'prometheus'
+
+  - job_name: app2
+    static_configs:
+      - targets: [ '172.16.101.72:9100' ]
+        labels:
+          container: 'prometheus'
+
+  - job_name: db
+    static_configs:
+      - targets: [ '172.16.101.73:9100' ]
+        labels:
+          container: 'prometheus'          
+
+  - job_name: web
+    static_configs:
+      - targets: [ '172.16.101.70:9100' ]
         labels:
           container: 'prometheus'
 
@@ -37,3 +73,10 @@ scrape_configs:
       - targets: [ 'cadvisor:8080' ]
         labels:
           container: 'cadvisor'
+
+  - job_name: telegraf db
+    scrape_interval: 10s
+    static_configs:
+      - targets: [ '192.168.0.171:9273' ]
+        labels:
+          container: 'prometheus'
